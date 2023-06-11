@@ -5,7 +5,7 @@ Backend API for SpecBox a.k.a. WebSpecimanager
 ## Installation
 
 1. Clone this repo.
-2. ```shards build --release`
+2. `shards build --release`
 
 ## Usage
 
