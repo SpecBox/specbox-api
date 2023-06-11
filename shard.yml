@@ -1,0 +1,13 @@
+name: specbox-api
+version: 0.1.0
+
+authors:
+  - fujikawahiroaki <fhir0aki3@gmail.com>
+
+targets:
+  specbox-api:
+    main: src/specbox-api.cr
+
+crystal: 1.8.2
+
+license: MIT
