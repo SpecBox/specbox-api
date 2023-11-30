@@ -25,3 +25,4 @@ dependencies:
     github: luckyframework/lucky_task
     version: ~> 0.3.0
 development_dependencies: {}
+
