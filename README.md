@@ -1,28 +1,23 @@
-# specbox-api
+# specbox_api
 
-Backend API for SpecBox a.k.a. WebSpecimanager
+This is a project written using [Lucky](https://luckyframework.org). Enjoy!
 
-## Installation
+### Setting up the project
 
-1. Clone this repo.
-2. `shards build --release`
+1. [Install required dependencies](https://luckyframework.org/guides/getting-started/installing#install-required-dependencies)
+1. Update database settings in `config/database.cr`
+1. Run `script/setup`
+1. Run `lucky dev` to start the app
 
-## Usage
+### Using Docker for development
 
-Comming soon...
+1. [Install Docker](https://docs.docker.com/engine/install/)
+1. Run `docker compose up`
 
-## Development
+The Docker container will boot all of the necessary components needed to run your Lucky application.
+To configure the container, update the `docker-compose.yml` file, and the `docker/development.dockerfile` file.
 
-Comming soon...
 
-## Contributing
+### Learning Lucky
 
-1. Fork it (<https://github.com/your-github-user/specbox-api/fork>)
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
-
-## Contributors
-
-- [fujikawahiroaki](https://github.com/your-github-user) - creator and maintainer
+Lucky uses the [Crystal](https://crystal-lang.org) programming language. You can learn about Lucky from the [Lucky Guides](https://luckyframework.org/guides/getting-started/why-lucky).

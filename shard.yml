@@ -1,13 +1,27 @@
-name: specbox-api
+---
+name: specbox_api
 version: 0.1.0
-
-authors:
-  - fujikawahiroaki <fhir0aki3@gmail.com>
-
 targets:
-  specbox-api:
-    main: src/specbox-api.cr
-
-crystal: 1.8.2
-
-license: MIT
+  specbox_api:
+    main: src/specbox_api.cr
+crystal: '>= 1.10.1'
+dependencies:
+  lucky:
+    github: luckyframework/lucky
+    version: ~> 1.1.0
+  avram:
+    github: luckyframework/avram
+    version: ~> 1.1.0
+  carbon:
+    github: luckyframework/carbon
+    version: ~> 0.4.0
+  carbon_sendgrid_adapter:
+    github: luckyframework/carbon_sendgrid_adapter
+    version: ~> 0.4.0
+  lucky_env:
+    github: luckyframework/lucky_env
+    version: ~> 0.2.0
+  lucky_task:
+    github: luckyframework/lucky_task
+    version: ~> 0.3.0
+development_dependencies: {}
