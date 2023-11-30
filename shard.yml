@@ -5,6 +5,8 @@ targets:
   specbox_api:
     main: src/specbox_api.cr
 crystal: '>= 1.10.1'
+crystalline:
+  main: src/app.cr
 dependencies:
   lucky:
     github: luckyframework/lucky
@@ -24,5 +26,9 @@ dependencies:
   lucky_task:
     github: luckyframework/lucky_task
     version: ~> 0.3.0
+  jwt:
+    github: crystal-community/jwt
+  jwks:
+    github: place-labs/jwks
 development_dependencies: {}
 
