@@ -26,5 +26,9 @@ dependencies:
   lucky_task:
     github: luckyframework/lucky_task
     version: ~> 0.3.0
+  jwt:
+    github: crystal-community/jwt
+  jwks:
+    github: place-labs/jwks
 development_dependencies: {}
 
