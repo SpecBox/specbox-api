@@ -31,3 +31,5 @@
 
 # Add a staging environment.
 # LuckyEnv.add_env :staging
+
+LuckyEnv.add_env :staging

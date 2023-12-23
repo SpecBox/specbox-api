@@ -1,10 +1,10 @@
 database_name = "specbox_api_#{LuckyEnv.environment}"
 
 AppDatabase.configure do |settings|
-  if LuckyEnv.production?
+  if LuckyEnv.production? || LuckyEnv.staging?
     settings.credentials = Avram::Credentials.parse(ENV["DATABASE_URL"])
   else
-    settings.credentials = Avram::Credentials.parse?(ENV["DATABASE_URL"]?) || Avram::Credentials.new(
+    settings.credentials = Avram::Credentials.parse(ENV["DATABASE_URL"]) || Avram::Credentials.new(
       database: database_name,
       hostname: ENV["DB_HOST"]? || "localhost",
       port: ENV["DB_PORT"]?.try(&.to_i) || 5432,
