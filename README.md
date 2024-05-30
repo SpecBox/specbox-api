@@ -1,5 +1,19 @@
 # specbox_api
 
+### docker-composeを利用した起動
+
+テスト用postgresとluckyのコンテナが立ち上がり、`lucky dev`が実行されてluckyの開発サーバが起動します。
+
+`docker-compose up`
+
+### docker-compose内のluckyに対するタスク実行
+
+luckyコマンドの各タスクをdocker-compose内のluckyに対して実行します。
+事前に`docker-compose up`の実行が必要です。
+
+例
+`./dc-lucky.sh --help`
+
 This is a project written using [Lucky](https://luckyframework.org). Enjoy!
 
 ### Setting up the project
