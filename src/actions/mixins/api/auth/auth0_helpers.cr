@@ -83,7 +83,7 @@ module Api::Auth::Auth0Helpers
       Log.info { "login_user: #{username}" }
       user = AuthUserQuery.new.username(username).first?
       if user.nil?
-        SaveAuthUser.create!(username: username)
+        SaveAuthUser.create!(username: username, date_joined: Time.local)
       else
         return user
       end

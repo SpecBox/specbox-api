@@ -8,6 +8,7 @@ services:
       DEV_HOST: "0.0.0.0"
       AUTH0_AUDIENCE: "http://www.fujikawa-h.net"
       AUTH0_DOMAIN: "webspecimanager-dev.us.auth0.com"
+      TZ: Asia/Tokyo
     volumes:
       - .:/app
       - node_modules:/app/node_modules
@@ -28,6 +29,7 @@ services:
       POSTGRES_USER: lucky
       POSTGRES_PASSWORD: password
       POSTGRES_DB: lucky
+      TZ: Asia/Tokyo
     volumes:
       - ./postgres/init:/docker-entrypoint-initdb.d
       - postgres_data:/var/lib/postgresql/data
