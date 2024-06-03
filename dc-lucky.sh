@@ -1,1 +1,1 @@
-docker-compose exec lucky lucky $1
+docker-compose exec lucky lucky ${@}
