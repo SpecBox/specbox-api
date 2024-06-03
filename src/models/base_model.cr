@@ -4,7 +4,7 @@ abstract class BaseModel < Avram::Model
   end
 
   macro default_columns
-    primary_key custom_key : UUID
+    primary_key id : UUID
     timestamps
   end
 end

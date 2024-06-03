@@ -80,7 +80,6 @@ module Api::Auth::Auth0Helpers
       decoded_token = self.validate_token(token)
       return nil if decoded_token.nil?
       username = decoded_token[0]["sub"].as_s.sub("|", ".")
-      Log.info { "login_user: #{username}" }
       user = AuthUserQuery.new.username(username).first?
       if user.nil?
         SaveAuthUser.create!(username: username, date_joined: Time.local)
