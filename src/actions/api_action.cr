@@ -12,4 +12,5 @@ abstract class ApiAction < Lucky::Action
   # Add 'include Lucky::SkipRouteStyleCheck' to your actions if you wish to ignore this check for specific routes.
   # include Lucky::EnforceUnderscoredRoute
   include Lucky::SkipRouteStyleCheck
+  include Api::Custom::SwitchOrder
 end

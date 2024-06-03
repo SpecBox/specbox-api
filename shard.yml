@@ -5,8 +5,6 @@ targets:
   specbox_api:
     main: src/specbox_api.cr
 crystal: '>= 1.10.1'
-crystalline:
-  main: src/specbox_api.cr
 dependencies:
   lucky:
     github: luckyframework/lucky
