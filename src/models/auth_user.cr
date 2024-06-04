@@ -1,3 +1,5 @@
+# ユーザーモデル
+# Djangoで生成されたユーザーモデルをそのまま利用
 class AuthUser < BaseModel
   skip_default_columns
   table :auth_user do

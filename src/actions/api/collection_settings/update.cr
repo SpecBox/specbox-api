@@ -1,3 +1,4 @@
+# コレクション設定の更新API
 class Api::CollectionSettings::Update < ApiAction
   put "/api/collection-settings/own-collection-settings/:collection_setting_id" do
     collection_setting = CollectionSettingQuery.new.find(collection_setting_id)

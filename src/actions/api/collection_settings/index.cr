@@ -1,3 +1,4 @@
+# コレクション設定のリスト取得API
 class Api::CollectionSettings::Index < ApiAction
   get "/api/collection-settings/own-collection-settings" do
     query = CollectionSettingQuery.new.user_id(current_user.id)
@@ -33,6 +34,7 @@ class Api::CollectionSettings::Index < ApiAction
     else
       query = switch_order(query.created_at, params)
     end
-    json CollectionSettingSerializer.for_collection(query)
+    pages, query = paginate(query, per_page: paginater_per_page)
+    json CollectionSettingSerializer.for_collection(query, pages)
   end
 end
