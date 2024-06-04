@@ -1,3 +1,4 @@
+# コレクション設定の保存オペレーション
 class SaveCollectionSetting < CollectionSetting::SaveOperation
   permit_columns(
     id,

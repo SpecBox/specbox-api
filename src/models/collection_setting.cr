@@ -1,3 +1,4 @@
+# コレクション設定モデル
 class CollectionSetting < BaseModel
   skip_default_columns
   table :collection_settings do

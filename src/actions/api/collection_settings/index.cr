@@ -1,3 +1,4 @@
+# コレクション設定のリスト取得API
 class Api::CollectionSettings::Index < ApiAction
   get "/api/collection-settings/own-collection-settings" do
     query = CollectionSettingQuery.new.user_id(current_user.id)
