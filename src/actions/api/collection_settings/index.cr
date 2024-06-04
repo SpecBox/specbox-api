@@ -34,6 +34,7 @@ class Api::CollectionSettings::Index < ApiAction
     else
       query = switch_order(query.created_at, params)
     end
-    json CollectionSettingSerializer.for_collection(query)
+    pages, query = paginate(query, per_page: paginater_per_page)
+    json CollectionSettingSerializer.for_collection(query, pages)
   end
 end
