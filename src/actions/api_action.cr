@@ -13,4 +13,10 @@ abstract class ApiAction < Lucky::Action
   # include Lucky::EnforceUnderscoredRoute
   include Lucky::SkipRouteStyleCheck
   include Api::Custom::SwitchOrder
+
+  include Lucky::Paginator::BackendHelpers
+
+  def paginater_per_page : Int32
+    params.get?(:perPage).try(&.to_i) || 20
+  end
 end

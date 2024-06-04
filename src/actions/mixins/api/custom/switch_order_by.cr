@@ -1,3 +1,4 @@
+# order byのASC/DESCを切り替えるAPIカスタムモジュール
 module Api::Custom::SwitchOrder
   def switch_order(query, params)
     if params.get?(:order)
