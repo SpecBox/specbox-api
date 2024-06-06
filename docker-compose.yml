@@ -6,8 +6,6 @@ services:
     environment:
       DATABASE_URL: postgres://lucky:password@postgres:5432/lucky
       DEV_HOST: "0.0.0.0"
-      AUTH0_AUDIENCE: "http://www.fujikawa-h.net"
-      AUTH0_DOMAIN: "webspecimanager-dev.us.auth0.com"
       TZ: Asia/Tokyo
     volumes:
       - .:/app
