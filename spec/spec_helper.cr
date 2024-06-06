@@ -17,3 +17,8 @@ include Lucky::RequestExpectations
 Avram::Migrator::Runner.new.ensure_migrated!
 Avram::SchemaEnforcer.ensure_correct_column_mappings!
 Habitat.raise_if_missing_settings!
+
+def current_user : AuthUser
+  auth_user = AuthUserQuery.new.username(ENV["AUTH0_TEST_USER_CLIENT_ID"] + "@clients").first?
+  auth_user ? auth_user : AuthUserFactory.create
+end
