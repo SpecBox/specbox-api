@@ -70,7 +70,6 @@ services:
       TZ: Asia/Tokyo
     volumes:
       - ./postgres/init:/docker-entrypoint-initdb.d
-      - postgres_data:/var/lib/postgresql/data
     ports:
       # The postgres database container is exposed on the host at port 6543 to
       # allow connecting directly to it with postgres clients. The port differs
