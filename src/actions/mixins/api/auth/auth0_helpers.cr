@@ -5,12 +5,37 @@ require "jwks"
 
 def make_pub_keys(jwks)
   pub_keys = Hash(String, String).new
-  unless jwks.values.nil?
-    jwks.values.not_nil!.each do |key|
-      pub_keys[key.kid] = key.to_pem
+  if jwks
+    if jwks.values
+      jwks.values.not_nil!.each do |key|
+        pub_keys[key.kid] = key.to_pem
+      end
     end
   end
   pub_keys
+end
+
+def fetch_jwks(jwks_url, retry_cnt = 10, sleep_interval = 5)
+  Log.info { "Start fetching jwks" }
+  begin
+    jwks = JW::Public::KeySets.new(jwks_url)
+    Log.info { "Successful fetched jwks" }
+    return jwks
+  rescue ex
+    Log.error { ex }
+    Log.error { "Fetching jwks is failed! Retry #{retry_cnt} times." }
+    retry_cnt.times do |cnt|
+      sleep sleep_interval
+      begin
+        jwks = JW::Public::KeySets.new(jwks_url)
+        Log.info { "Successful fetched jwks" }
+        return jwks
+      rescue
+        Log.error { ex }
+        Log.error { "Fetching jwks is failed! Retry #{retry_cnt - (cnt + 1)} times." }
+      end
+    end
+  end
 end
 
 module Api::Auth::Auth0Helpers
@@ -21,19 +46,10 @@ module Api::Auth::Auth0Helpers
 
   AUTH0_DOMAIN_URL    = "https://#{ENV["AUTH0_DOMAIN"]}"
   AUTH0_USER_INFO_URL = "#{AUTH0_DOMAIN_URL}/userinfo"
+  JWKS_URL            = "#{AUTH0_DOMAIN_URL}/.well-known/jwks.json"
 
-  @@jwks = JW::Public::KeySets.new("#{AUTH0_DOMAIN_URL}/.well-known/jwks.json")
+  @@jwks : JW::Public::KeySets? = fetch_jwks(JWKS_URL)
   @@pub_keys : Hash(String, String) = make_pub_keys(@@jwks)
-
-  def make_pub_keys
-    pub_keys = Hash(String, String).new
-    unless @@jwks.values.nil?
-      @@jwks.values.not_nil!.each do |key|
-        pub_keys[key.kid] = key.to_pem
-      end
-    end
-    pub_keys
-  end
 
   # The 'memoize' macro makes sure only one query is issued to find the user
   memoize def current_user? : AuthUser?
@@ -69,8 +85,8 @@ module Api::Auth::Auth0Helpers
     rescue ex : Auth0TokenAuthError
       nil
     rescue ex : JWT::DecodeError
-      @@jwks = JW::Public::KeySets.new("#{AUTH0_DOMAIN_URL}/.well-known/jwks.json")
-      @@pub_keys = make_pub_keys(@@jwks)
+      @@jwks = fetch_jwks(JWKS_URL)
+      @@pub_keys = make_pub_keys(@@jwks) unless @@jwks.nil?
       nil
     end
   end
