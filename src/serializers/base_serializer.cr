@@ -1,5 +1,5 @@
 abstract class BaseSerializer < Lucky::Serializer
-  def self.for_collection(collection : Enumerable, pages : Lucky::Paginator, *args, **named_args)
+  def self.for_collection_with_paginate(collection : Enumerable, pages : Lucky::Paginator, *args, **named_args)
     {
       "data" => collection.map do |object|
         new(object, *args, **named_args)
