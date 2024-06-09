@@ -13,6 +13,7 @@ abstract class ApiAction < Lucky::Action
   # include Lucky::EnforceUnderscoredRoute
   include Lucky::SkipRouteStyleCheck
   include Api::Custom::FilterMacros
+  include Api::Custom::Bulk
 
   include Lucky::Paginator::BackendHelpers
 
