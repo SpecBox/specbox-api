@@ -32,5 +32,6 @@ dependencies:
     github: fujikawahiroaki/postgis
   lucky_postgis:
     github: fujikawahiroaki/lucky_postgis
+    version: ~> 0.2.0
 development_dependencies: {}
 

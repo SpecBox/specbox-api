@@ -74,7 +74,7 @@ shards:
 
   lucky_postgis:
     git: https://github.com/fujikawahiroaki/lucky_postgis.git
-    version: 0.1.0+git.commit.49715ef4e1adf9dbd2fb99d8645c7ffb941c9cac
+    version: 0.2.0
 
   lucky_router:
     git: https://github.com/luckyframework/lucky_router.git
