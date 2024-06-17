@@ -1,5 +1,8 @@
 *lib/*
 bin/*
 tmp/*
+!public/media/
+public/media/*
+!public/media/.gitkeep
 get_test_token.sh
 .env
