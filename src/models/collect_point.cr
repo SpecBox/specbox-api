@@ -28,5 +28,7 @@ class CollectPoint < BaseModel
     column image4 : String?
     column image5 : String?
     column user_id : Int32?
+    has_many collect_points_tour : CollectPointsTour
+    has_many tours : Tour, through: [:collect_points_tour, :tours]
   end
 end
