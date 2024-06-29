@@ -6,3 +6,5 @@ LuckyEnv.load?(".env")
 require "lucky"
 require "avram/lucky"
 require "carbon"
+require "lucky_postgis"
+require "iso_codes"

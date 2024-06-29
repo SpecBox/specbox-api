@@ -52,6 +52,10 @@ shards:
     git: https://github.com/luckyframework/habitat.git
     version: 0.4.8
 
+  iso_codes:
+    git: https://github.com/mamantoha/iso_codes.git
+    version: 0.4.7
+
   jwks:
     git: https://github.com/place-labs/jwks.git
     version: 0.2.1
