@@ -14,6 +14,7 @@ abstract class ApiAction < Lucky::Action
   include Lucky::SkipRouteStyleCheck
   include Api::Custom::FilterMacros
   include Api::Custom::Bulk
+  include Api::Custom::ManyToMany
 
   include Lucky::Paginator::BackendHelpers
 
