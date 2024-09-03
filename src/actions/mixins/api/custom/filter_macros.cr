@@ -45,6 +45,15 @@ module Api::Custom::FilterMacros
     {% end %}
   end
 
+  macro bool_chain_filters(query, *columns)
+    {% for column in columns %}
+      %eq_sym = :{{column}}
+      if params.get?(%eq_sym)
+        {{query}} = {{query}}.{{column}}.eq(params.get(%eq_sym))
+      end
+    {% end %}
+  end
+
   macro geo_point_chain_filters(query, *columns)
     {% for column in columns %}
       %longitude_eq_sym = :{{column}}__longitude
