@@ -9,9 +9,9 @@ module Api::Custom::Bulk
     {{query}}.update(
       {% for column, index in allowed_columns %}
         {% if (index + 1) < allowed_columns.size %}
-          {{column}}: {{update_data}}.{{column}}__for_avram,
+          {{column}}: {{update_data}}.{{column}} || IGNORE,
         {% else %}
-          {{column}}: {{update_data}}.{{column}}__for_avram
+          {{column}}: {{update_data}}.{{column}} || IGNORE
         {% end %}
       {% end %}
     )
