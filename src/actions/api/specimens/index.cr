@@ -186,8 +186,6 @@ class Api::Specimens::Index < ApiAction
     )
     pages, query = paginate(query, per_page: paginater_per_page)
 
-    Log.debug { query.to_sql }
-
     json SpecimenSerializer.for_collection_with_paginate(query, pages)
   end
 end
