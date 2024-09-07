@@ -1,7 +1,7 @@
 # デフォルト分類情報のリスト取得API
 class Api::CustomTaxa::Index < ApiAction
   get "/api/custom-taxa" do
-      query = TaxonQuery.new.only_custom_taxon.only_current_user(current_user.id)
+    query = TaxonQuery.new.only_custom_taxon.only_current_user(current_user.id)
     string_chain_filters(query,
       kingdom,
       phylum,
