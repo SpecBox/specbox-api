@@ -1,9 +1,57 @@
 require "./mixins/switch_avram_nothing"
 require "./mixins/simple_date_converter"
 
+def count_specimen_taxon(query, target_taxon)
+  taxon_list = ["kingdom", "phylum", "class_name", "order",
+                "suborder", "family", "subfamily", "tribe",
+                "subtribe", "genus", "subgenus", "species",
+                "subspecies"]
+  specimens = SpecimenSerializer.for_collection(query).map { |specimen|
+    specimen_data = specimen.render
+    used_taxon_vals = [] of String
+    taxon_list.each do |taxon|
+      taxon_val = if specimen_data[:custom_taxon]
+                    specimen_data[:custom_taxon].not_nil!.render[taxon]
+                  elsif specimen_data[:default_taxon]
+                    specimen_data[:default_taxon].not_nil!.render[taxon]
+                  else
+                    ""
+                  end
+      used_taxon_vals << taxon_val.to_s
+      break if taxon == target_taxon
+    end
+    used_taxon_vals.join(' ')
+  }.uniq!.size
+end
+
 # 標本のシリアライザ
 class SpecimenSerializer < BaseSerializer
   def initialize(@specimen : Specimen)
+  end
+
+  def self.for_collection_with_paginate_and_taxon_count(collection : Enumerable, pages : Lucky::Paginator, query_for_count_taxon, target_taxon, all_specimens, *args, **named_args)
+    search_taxon_count = count_specimen_taxon(query_for_count_taxon, target_taxon)
+    species_taxon_count = count_specimen_taxon(all_specimens, "species")
+    subspecies_taxon_count = count_specimen_taxon(all_specimens, "subspecies")
+
+    {
+      "data" => collection.map do |object|
+        new(object, *args, **named_args)
+      end,
+      "taxon_count" => {
+        search_count:     search_taxon_count,
+        species_count:    species_taxon_count,
+        subspecies_count: subspecies_taxon_count,
+      },
+      "pageInfo" => {
+        next:            pages.path_to_next,
+        previous:        pages.path_to_previous,
+        hasNextPage:     pages.path_to_next.nil?.!,
+        hasPreviousPage: pages.path_to_previous.nil?.!,
+        count:           pages.item_count,
+        total:           pages.total,
+      },
+    }
   end
 
   def render
