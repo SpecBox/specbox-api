@@ -2,6 +2,7 @@
 class Api::Specimens::Index < ApiAction
   get "/api/specimens" do
     query = SpecimenQuery.new.all_preload.user_id(current_user.id)
+    all_specimens = query.clone
     param_keys = params.to_h.keys
 
     string_chain_filters(query,
@@ -162,6 +163,13 @@ class Api::Specimens::Index < ApiAction
     )
     query = query.left_join_tour.where_tour(tour_query, auto_inner_join: false)
 
+    query_for_count_taxon = query.clone
+    target_taxon = if params.get?("target_taxon")
+                     params.get("target_taxon")
+                   else
+                     "subspecies"
+                   end
+
     ordering_single_column_query(query, :ordering,
       date_last_modified,
       identified_by,
@@ -186,6 +194,6 @@ class Api::Specimens::Index < ApiAction
     )
     pages, query = paginate(query, per_page: paginater_per_page)
 
-    json SpecimenSerializer.for_collection_with_paginate(query, pages)
+    json SpecimenSerializer.for_collection_with_paginate_and_taxon_count(query, pages, query_for_count_taxon, target_taxon, all_specimens)
   end
 end
