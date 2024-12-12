@@ -1,5 +1,13 @@
 FROM crystallang/crystal:1.12.1
 
+ARG USERNAME=app
+ARG GROUPNAME=app
+ARG UID=1000
+ARG GID=1000
+
+RUN groupadd -g $GID $GROUPNAME && \
+    useradd -m -s /bin/bash -u $UID -g $GID $USERNAME
+
 # Install utilities required to make this Dockerfile run
 RUN apt-get update && \
     apt-get install -y wget
