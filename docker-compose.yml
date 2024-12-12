@@ -3,6 +3,11 @@ services:
     build:
       context: .
       dockerfile: docker/development.dockerfile
+      args:
+        UID: 1000
+        GID: 1000
+        USERNAME: app
+        GROUPNAME: app
     environment:
       DATABASE_URL: postgres://lucky:password@postgres:5432/lucky
       DEV_HOST: "0.0.0.0"
