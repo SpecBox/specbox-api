@@ -73,4 +73,12 @@ class Specimen < BaseModel
     property taxon_count : Int64
     property taxon_percentage : Float64
   end
+
+  # 採集地点別集計用サブタイプクラス
+  class PercentageCollectPoint
+    include DB:: Serializable
+    property collect_point_name : String
+    property collect_point_count : Int64
+    property collect_point_percentage : Float64
+  end
 end
