@@ -21,6 +21,12 @@ abstract class BaseSerializer < Lucky::Serializer
     end
   end
 
+  def self.nested_key_data_for_collection(records, *args, **named_args)
+    {
+      "data": for_collection(records, *args, **named_args),
+    }
+  end
+
   def self.nested_key_data(record, *args, **named_args)
     {
       "data": new(record, *args, **named_args),

@@ -24,6 +24,20 @@ def count_specimen_taxon(query, target_taxon)
   }.uniq!.size
 end
 
+# 標本の分類群別集計シリアライザ
+class SpecimenPercentageTaxonSerializer < BaseSerializer
+  def initialize(@report : Specimen::PercentageTaxon)
+  end
+
+  def render
+    {
+      taxon:      @report.taxon_name,
+      percentage: @report.taxon_percentage,
+      count:      @report.taxon_count,
+    }
+  end
+end
+
 # 標本のシリアライザ
 class SpecimenSerializer < BaseSerializer
   def initialize(@specimen : Specimen)
