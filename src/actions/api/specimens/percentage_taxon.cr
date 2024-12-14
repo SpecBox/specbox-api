@@ -4,6 +4,6 @@ class Specimens::PercentageTaxon < ApiAction
     target_collection = params.get?("target_collection")
     is_all = params.get("is_all")
     results = SpecimenPercentageTaxonQuery.all(current_user.id, target_collection, target_taxon, is_all)
-    json SpecimenPercentageTaxonSerializer.nested_key_data_for_collection(results)
+    json SpecimenPercentageTaxonSerializer.top_and_other(results, 10)
   end
 end

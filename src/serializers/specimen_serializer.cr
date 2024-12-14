@@ -29,6 +29,35 @@ class SpecimenPercentageTaxonSerializer < BaseSerializer
   def initialize(@report : Specimen::PercentageTaxon)
   end
 
+  def self.top_and_other(collection : Enumerable, limit = 10)
+    collection.map! { |rec|
+      if rec.taxon_name == ""
+        rec.taxon_name = "Unknown"
+        rec
+      else
+        rec
+      end
+    }
+    if collection.size > limit
+      top_collection = collection[...limit]
+      other_count = collection[limit..].sum(&.taxon_count)
+      other_percentage = 100.0 - top_collection.sum(&.taxon_percentage)
+      data = top_collection.map { |rec|
+        {
+          taxon:      rec.taxon_name,
+          percentage: rec.taxon_percentage,
+          count:      rec.taxon_count,
+        }
+      }
+      data << {taxon: "Other", percentage: other_percentage, count: other_count}
+      {
+        "data": data,
+      }
+    else
+      self.nested_key_data_for_collection(collection)
+    end
+  end
+
   def render
     {
       taxon:      @report.taxon_name,
