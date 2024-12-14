@@ -1,10 +1,18 @@
-class SpecimenPercentageTaxonQuery < Specimen::BaseQuery
-  def self.all(user_id, target_collection, target_taxon, is_all)
-    allowed_taxon_columns = ["kingdom", "phylum", "class_name", "order",
-                             "suborder", "family", "subfamily", "tribe",
-                             "subtribe", "genus"]
+class SpecimenPercentageCollectPointQuery < Specimen::BaseQuery
+  def self.all(user_id, target_collection, target_collect_point, is_all)
+    allowed_collect_point_columns = [
+      "contient",
+      "island_group",
+      "island",
+      "country",
+      "state_provice",
+      "county",
+      "municipality",
+      "japanese_place_name",
+      "japanese_place_name_detail",
+    ]
 
-    if allowed_taxon_columns.includes?(target_taxon)
+    if allowed_collect_point_columns.includes?(target_collect_point)
       if is_all == "true"
         sql = <<-SQL
           with all_specimens as (
@@ -17,26 +25,26 @@ class SpecimenPercentageTaxonQuery < Specimen::BaseQuery
           )
 
           select
-            all_taxa."#{target_taxon}" as taxon_name,
-            count(*) as taxon_count,
-            (round((cast(count(all_taxa."#{target_taxon}") as float) / (select specimens_count from all_specimens) * 100.0)::numeric, 2))::DOUBLE PRECISION as taxon_percentage
+            collect_points."#{target_collect_point}" as collect_point_name,
+            count(*) as collect_point_count,
+            (round((cast(count(collect_points."#{target_collect_point}") as float) / (select specimens_count from all_specimens) * 100.0)::numeric, 1))::DOUBLE PRECISION as collect_point_percentage
           from
             specimens
           inner join
             collection_settings on specimens.collection_settings_info_id = collection_settings.id
           left join
-            all_taxa on coalesce(specimens.custom_taxon_info_id, specimens.default_taxon_info_id) = all_taxa.id
+            collect_points on specimens.collect_point_info_id = collect_points.id
           where
             specimens.user_id = $1
           group by
-            all_taxa."#{target_taxon}"
+            collect_points."#{target_collect_point}"
           order by
-            taxon_percentage desc
+            collect_point_percentage desc
         SQL
         AppDatabase.query_all(
           sql,
           args: [user_id],
-          as: Specimen::PercentageTaxon
+          as: Specimen::PercentageCollectPoint
         )
       elsif is_all = "false"
         unless target_collection
@@ -55,32 +63,32 @@ class SpecimenPercentageTaxonQuery < Specimen::BaseQuery
           )
 
           select
-            all_taxa."#{target_taxon}" as taxon_name,
-            count(*) as taxon_count,
-            (round((cast(count(all_taxa."#{target_taxon}") as float) / (select specimens_count from all_specimens) * 100.0)::numeric, 2))::DOUBLE PRECISION as taxon_percentage
+            collect_points."#{target_collect_point}" as collect_point_name,
+            count(*) as collect_point_count,
+            (round((cast(count(collect_points."#{target_collect_point}") as float) / (select specimens_count from all_specimens) * 100.0)::numeric, 1))::DOUBLE PRECISION as collect_point_percentage
           from
             specimens
           inner join
             collection_settings on specimens.collection_settings_info_id = collection_settings.id
           left join
-            all_taxa on coalesce(specimens.custom_taxon_info_id, specimens.default_taxon_info_id) = all_taxa.id
+            collect_points on specimens.collect_point_info_id = collect_points.id
           where
             specimens.user_id = $1 and collection_settings.institution_code = $2
           group by
-            all_taxa."#{target_taxon}"
+            collect_points."#{target_collect_point}"
           order by
-            taxon_percentage desc
+            collect_point_percentage desc
         SQL
         AppDatabase.query_all(
           sql,
           args: [user_id, target_collection],
-          as: Specimen::PercentageTaxon
+          as: Specimen::PercentageCollectPoint
         )
       else
         raise "Invalid is_all value: #{is_all}"
       end
     else
-      raise "Invalid taxon column name: #{target_taxon}"
+      raise "Invalid collect_point column name: #{target_collect_point}"
     end
   end
 end
