@@ -65,4 +65,12 @@ class Specimen < BaseModel
     column image4 : String?
     column image5 : String?
   end
+
+  # 分類群別集計用サブタイプクラス
+  class PercentageTaxon
+    include DB::Serializable
+    property taxon_name : String
+    property taxon_count : Int64
+    property taxon_percentage : Float64
+  end
 end
