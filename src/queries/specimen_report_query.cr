@@ -30,6 +30,8 @@ class SpecimenPercentageTaxonQuery < Specimen::BaseQuery
             specimens.user_id = $1
           group by
             all_taxa."#{target_taxon}"
+          order by
+            taxon_percentage desc
         SQL
         AppDatabase.query_all(
           sql,
@@ -66,6 +68,8 @@ class SpecimenPercentageTaxonQuery < Specimen::BaseQuery
             specimens.user_id = $1 and collection_settings.institution_code = $2
           group by
             all_taxa."#{target_taxon}"
+          order by
+            taxon_percentage desc
         SQL
         AppDatabase.query_all(
           sql,
