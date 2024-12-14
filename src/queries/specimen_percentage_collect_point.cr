@@ -27,7 +27,7 @@ class SpecimenPercentageCollectPointQuery < Specimen::BaseQuery
           select
             collect_points."#{target_collect_point}" as collect_point_name,
             count(*) as collect_point_count,
-            (round((cast(count(collect_points."#{target_collect_point}") as float) / (select specimens_count from all_specimens) * 100.0)::numeric, 2))::DOUBLE PRECISION as collect_point_percentage
+            (round((cast(count(collect_points."#{target_collect_point}") as float) / (select specimens_count from all_specimens) * 100.0)::numeric, 1))::DOUBLE PRECISION as collect_point_percentage
           from
             specimens
           inner join
@@ -65,7 +65,7 @@ class SpecimenPercentageCollectPointQuery < Specimen::BaseQuery
           select
             collect_points."#{target_collect_point}" as collect_point_name,
             count(*) as collect_point_count,
-            (round((cast(count(collect_points."#{target_collect_point}") as float) / (select specimens_count from all_specimens) * 100.0)::numeric, 2))::DOUBLE PRECISION as collect_point_percentage
+            (round((cast(count(collect_points."#{target_collect_point}") as float) / (select specimens_count from all_specimens) * 100.0)::numeric, 1))::DOUBLE PRECISION as collect_point_percentage
           from
             specimens
           inner join

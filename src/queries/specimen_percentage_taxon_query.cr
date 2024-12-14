@@ -19,7 +19,7 @@ class SpecimenPercentageTaxonQuery < Specimen::BaseQuery
           select
             all_taxa."#{target_taxon}" as taxon_name,
             count(*) as taxon_count,
-            (round((cast(count(all_taxa."#{target_taxon}") as float) / (select specimens_count from all_specimens) * 100.0)::numeric, 2))::DOUBLE PRECISION as taxon_percentage
+            (round((cast(count(all_taxa."#{target_taxon}") as float) / (select specimens_count from all_specimens) * 100.0)::numeric, 1))::DOUBLE PRECISION as taxon_percentage
           from
             specimens
           inner join
@@ -57,7 +57,7 @@ class SpecimenPercentageTaxonQuery < Specimen::BaseQuery
           select
             all_taxa."#{target_taxon}" as taxon_name,
             count(*) as taxon_count,
-            (round((cast(count(all_taxa."#{target_taxon}") as float) / (select specimens_count from all_specimens) * 100.0)::numeric, 2))::DOUBLE PRECISION as taxon_percentage
+            (round((cast(count(all_taxa."#{target_taxon}") as float) / (select specimens_count from all_specimens) * 100.0)::numeric, 1))::DOUBLE PRECISION as taxon_percentage
           from
             specimens
           inner join

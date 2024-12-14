@@ -41,7 +41,7 @@ class SpecimenPercentageCollectPointSerializer < BaseSerializer
     if collection.size > limit
       top_collection = collection[...limit]
       other_count = collection[limit..].sum(&.collect_point_count)
-      other_percentage = 100.0 - top_collection.sum(&.collect_point_percentage)
+      other_percentage = (100.0 - top_collection.sum(&.collect_point_percentage)).round(1)
       data = top_collection.map { |rec|
         {
           taxon:      rec.collect_point_name,
@@ -84,7 +84,7 @@ class SpecimenPercentageTaxonSerializer < BaseSerializer
     if collection.size > limit
       top_collection = collection[...limit]
       other_count = collection[limit..].sum(&.taxon_count)
-      other_percentage = 100.0 - top_collection.sum(&.taxon_percentage)
+      other_percentage = (100.0 - top_collection.sum(&.taxon_percentage)).round(1)
       data = top_collection.map { |rec|
         {
           taxon:      rec.taxon_name,
